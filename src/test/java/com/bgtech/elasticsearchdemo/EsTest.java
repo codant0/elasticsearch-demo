@@ -16,14 +16,14 @@ import java.util.Map;
 /**
  * @Author 黄杰峰
  * @Date 2020/9/4 0004 9:22
- * @Description
+ * @Description 原生ElasticSearch测试
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class EsTest {
 
     @Test
-    public void esInsertTest() {
+    public void esInsertAndSearchTest() {
         ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
 
         // 获取es集群的状态，原生RestApi风格
@@ -60,10 +60,16 @@ public class EsTest {
             }
         }, Map.class);
         // 多线程获取索引下所有document，此处线程数为2
-        //You can also use ScrollHandler to process each batch of datas on your own.
+        // You can also use ScrollHandler to process each batch of datas on your own.
         esDatas = clientUtil.searchAllParallel("demo", Map.class,2);
         System.out.println("searchAllParallel:ok");
     }
 
+    @Test
+    public void esDeleteTest() {
+        ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
+        clientUtil.deleteDocument("index", "type", "id");
+        clientUtil.deleteDocuments("index", "type", new String[]{"id1", "id2", "id3"});
+    }
 
 }

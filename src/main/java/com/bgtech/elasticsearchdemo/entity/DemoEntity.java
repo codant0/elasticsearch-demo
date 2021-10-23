@@ -1,5 +1,6 @@
 package com.bgtech.elasticsearchdemo.entity;
 
+import com.frameworkset.orm.annotation.ESId;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Date;
  */
 @Data
 public class DemoEntity {
+    @ESId
     private long demoId;
     private Date agentStarttime;
     private Date agentStarttimezh;
